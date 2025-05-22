@@ -21,4 +21,18 @@ for port in ports:
     if result == 0:
         print(f"Port {port} OPEN")
     s.close()
-print('All done. Good luck pwning!')
+
+confirmGrab = input('Would you like to grab banners? (y/n)')
+
+if confirmGrab == 'y':
+    print('Grabbing banners now...')
+    s = socket.socket()
+    s.settimeout(2)
+    s.connect((target, 80))
+    s.sendall(b'HEAD / HTTP/1.0\r\n\r\n')
+    banner = s.recv(1024)
+    print("\n"+banner.decode(errors='ignore')+"\n Good luck pwning!")
+    s.close
+
+else:
+    print('Good luck pwning!')
